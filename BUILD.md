@@ -113,6 +113,10 @@ The overview is dashboard-first rather than landing-page-first: filters, metrics
 
 The serverless bundle includes its shared data logic; it does not rely on source files being present after upload.
 
+The dashboard UI is still client-rendered after the shell loads, but the Vura manifest marks only the known shell URLs as `mode: "static"` with explicit `config.staticKey` values. Do not switch these page entries to `mode: "client"` unless you want a global SPA fallback: Vura's edge router serves extensionless unknown paths from `index.html` for client-mode deployments. Lens instead publishes `/`, `/cohorts`, `/exports` and `/build` explicitly, sets `notFoundPage: "404.html"`, and lets unknown paths return the generated 404 document.
+
+The local preview server mirrors this static-delivery contract for smoke tests, but it is only a contract check. The provider retry is the proof for hosted HTTP status on unknown routes.
+
 ## Production extension
 
 To turn Lens into a real analytics product, add an authenticated ingestion path, durable event storage and tenant isolation. Keep the fixture seed available for demos/tests so contributors can run the dashboard without external services.

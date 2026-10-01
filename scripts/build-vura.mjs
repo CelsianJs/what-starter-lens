@@ -44,12 +44,12 @@ await build({
 
 await writeFile(join(dist, 'manifest.json'), JSON.stringify({
   version: 1,
+  notFoundPage: '404.html',
   pages: [
-    { filePath: 'src/app.jsx', urlPattern: '/', mode: 'client', hasLoader: false, hasGetServerData: false, config: { mode: 'client', title: 'Lens — What Framework analytics starter' } },
-    { filePath: 'src/app.jsx', urlPattern: '/cohorts', mode: 'client', hasLoader: false, hasGetServerData: false, config: { mode: 'client' } },
-    { filePath: 'src/app.jsx', urlPattern: '/exports', mode: 'client', hasLoader: false, hasGetServerData: false, config: { mode: 'client' } },
-    { filePath: 'src/static-pages.mjs', urlPattern: '/build', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', title: 'How Lens is built' } },
-    { filePath: 'src/static-pages.mjs', urlPattern: '/404', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', title: 'Lens route not found' } }
+    { filePath: 'index.html', urlPattern: '/', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', staticKey: 'index.html', title: 'Lens — What Framework analytics starter' } },
+    { filePath: 'cohorts/index.html', urlPattern: '/cohorts', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', staticKey: 'cohorts/index.html' } },
+    { filePath: 'exports/index.html', urlPattern: '/exports', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', staticKey: 'exports/index.html' } },
+    { filePath: 'build/index.html', urlPattern: '/build', mode: 'static', hasLoader: false, hasGetServerData: false, config: { mode: 'static', staticKey: 'build/index.html', title: 'How Lens is built' } }
   ],
   api: [
     { filePath: 'src/api/report.js', urlPattern: '/api/report', methods: ['GET', 'POST'], kind: 'serverless', hasWebsocket: false, config: { kind: 'serverless', compute: { class: 'function', memory: '1gb' } } }
