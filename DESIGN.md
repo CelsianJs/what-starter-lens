@@ -1,0 +1,87 @@
+# Design
+
+## Source of truth
+- Status: Active
+- Last refreshed: 2026-10-01
+- Primary product surfaces: compact analytics overview with chart panels above the fold, cohort table, export/server report view, static `/build` explainer.
+- Evidence reviewed: What Framework dashboard conventions, Vura build-output shape, and the public starter requirements.
+
+## Brand
+- Personality: blue-grey product analytics console; dense but calm, synthetic and clearly labeled.
+- Trust signals: deterministic fixture seed, explicit no-tracking copy, typed server report, CSV export.
+- Avoid: fake customer data, fake integrations, surveillance vibes, purple AI gradients.
+
+## Product goals
+- Goals: demonstrate dashboard-first filters, charts, cohort detail, CSV export and a serverless report endpoint.
+- Non-goals: real ingestion, user tracking, external data-platform sync, paid analytics services.
+- Success signals: filters update charts instantly, cohort table remains readable, CSV exports current rows, server endpoint mirrors current aggregate.
+
+## Personas and jobs
+- Primary personas: agents copying analytics starter patterns; product teams evaluating What/Vura fit.
+- User jobs: inspect signal/computed dashboard patterns, test serverless aggregates, reuse a deployable starter.
+- Key contexts of use: marketing gallery, source reference, local browser QA.
+
+## Information architecture
+- Primary navigation: Overview, Cohorts, Exports, Build.
+- Core routes/screens: `/`, `/cohorts`, `/exports`, `/build`, `/404`.
+- Content hierarchy: synthetic data disclosure, filters, totals and visual chart panels before long-form explanation.
+
+## Design principles
+- Data honesty: always call out synthetic seed data.
+- High contrast density: dashboard can hold numbers without becoming grey mush.
+- Dashboard first: users should see controls, metrics and charts above the fold, not a marketing hero.
+- Copyable internals: data functions and report endpoint are readable and tested.
+
+## Visual language
+- Color: dark blue-grey, cyan/lime signal accents.
+- Typography: Avenir Next/system sans for a clean analytical feel.
+- Spacing/layout rhythm: compact left rail plus dashboard board on desktop; stacked mobile.
+- Shape/radius/elevation: rounded glassy panels with subtle borders.
+- Motion: none required for meaning; reduced-motion guard present.
+- Imagery/iconography: no external imagery.
+
+## Components
+- Existing components to reuse: none; standalone public starter.
+- New/changed components: rail nav, compact product header, filters, stat cards, bar charts, cohort table, export panel.
+- Variants and states: report idle/loading/ready/error; filtered empty endpoint state.
+- Token/component ownership: CSS variables in `src/styles.css`.
+
+## Accessibility
+- Target standard: WCAG AA practical baseline.
+- Keyboard/focus behavior: native selects/buttons and focus rings.
+- Contrast/readability: bright text/accent against dark background.
+- Screen-reader semantics: labels, tables and landmarks.
+- Reduced motion and sensory considerations: no required motion; reduced-motion reset included.
+
+## Responsive behavior
+- Supported breakpoints/devices: desktop and mobile.
+- Layout adaptations: sticky rail becomes top block; cards/filter grid collapse to one column.
+- Touch/hover differences: nav and buttons remain large enough for touch.
+
+## Interaction states
+- Loading: export page prints `Loading…`.
+- Empty: server endpoint has explicit no-match error, though valid UI filters always have data.
+- Error: report panel prints typed error JSON.
+- Success: report JSON includes filters, rowCount, totals, byChannel, byCohort and byDay.
+- Disabled: not needed.
+- Offline/slow network: client analytics keep working; server report shows fetch error.
+
+## Content voice
+- Tone: precise and transparent.
+- Terminology: synthetic seed, visitors, activation, retention, cohort, channel.
+- Microcopy rules: never imply real user tracking.
+
+## Implementation constraints
+- Framework/styling system: What Framework `0.13.10`, Vite, handwritten CSS.
+- Design variable constraints: local CSS variables only.
+- Performance constraints: fixture set only, no network until server report.
+- Compatibility constraints: Vura Function-compatible endpoint, browser Blob CSV export.
+- Test/screenshot expectations: unit tests, API tests, build, Playwright smoke where browser is available.
+
+## Open questions
+- [ ] Root confirms final live Vura URL after deployment.
+
+## Visual QA audit
+- External reference: none supplied; design was evaluated against this document rather than a pixel target.
+- Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is now dashboard-first with controls, metrics and chart panels above the fold; dense tables remain readable inside scrolling cards; mobile collapses the rail/cards cleanly; reduced-motion is respected.
+- Follow-up after deployment: capture desktop/mobile screenshots from the live Vura URL and compare against the product goals above before linking from the marketing gallery.
