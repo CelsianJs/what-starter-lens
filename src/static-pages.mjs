@@ -33,6 +33,11 @@ export function BuildPage() {
       h('p', null, 'The helper functions in src/data.js return chart orientation and comparison metadata, so future agents can test the data contract before changing the visual layer.')
     ),
     h('section', null,
+      h('h2', null, 'Design iteration: chart geometry'),
+      h('p', null, 'A follow-up review caught that dense revenue ranges could misalign bar baselines and clip the last column. The chart now uses minmax(0, 1fr) columns plus a fixed label axis row, so every bar shares the same baseline.'),
+      h('p', null, 'For dense ranges, Lens shows fewer visual date ticks while preserving a full accessible date-and-amount label on every column. The smoke test checks 7, 14 and 30 day ranges at desktop and true 390px mobile widths.')
+    ),
+    h('section', null,
       h('h2', null, 'Boundaries'),
       h('p', null, 'Lens never tracks the visitor. All analytics rows are generated fixtures and the serverless report reads only that fixture set.'),
       h('p', null, 'Planned public source: https://github.com/CelsianJs/what-starter-lens')

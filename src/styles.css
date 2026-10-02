@@ -84,21 +84,20 @@ select:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(101,211,255
 .bar-row b { color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .trend {
   display: grid;
-  grid-template-columns: repeat(var(--count), minmax(22px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(var(--count), minmax(0, 1fr));
+  gap: 4px;
   height: 280px;
-  align-items: end;
   padding-top: 26px;
+  overflow: hidden;
 }
 .trend-col {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 8px;
-  align-items: stretch;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) 3.4em;
+  gap: 6px;
   height: 100%;
   min-width: 0;
   position: relative;
+  outline: none;
 }
 .trend-col i {
   display: block;
@@ -106,18 +105,26 @@ select:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(101,211,255
   min-height: 10px;
   border-radius: 999px 999px 6px 6px;
   background: linear-gradient(180deg, var(--cyan), var(--lime));
+  align-self: end;
 }
 .trend-col span {
   color: var(--muted);
   font-size: 11px;
   text-align: center;
-  writing-mode: vertical-rl;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: visible;
+  align-self: start;
   justify-self: center;
+  min-width: 0;
+}
+.trend-col span[data-visible="false"] {
+  opacity: 0;
 }
 .trend-value {
   position: absolute;
   left: 50%;
-  bottom: calc(100% + 4px);
+  bottom: calc(3.4em + 12px + (var(--share) * (100% - 3.4em - 6px)));
   transform: translateX(-50%);
   color: var(--muted);
   font-size: 10px;
@@ -126,7 +133,7 @@ select:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(101,211,255
   opacity: 0;
 }
 .trend-col:hover .trend-value,
-.trend-col:focus-within .trend-value { opacity: 1; }
+.trend-col:focus .trend-value { opacity: 1; }
 table { width: 100%; min-width: 620px; border-collapse: collapse; overflow: hidden; }
 th, td { text-align: left; padding: 15px 10px; border-bottom: 1px solid var(--line); }
 td:not(:first-child), th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
@@ -188,7 +195,7 @@ pre { margin: 0; white-space: pre-wrap; overflow: auto; border-radius: 20px; bac
     align-items: end;
   }
   .product-header aside small { grid-column: 1 / -1; }
-  .trend { gap: 5px; height: 240px; }
+  .trend { gap: 3px; height: 240px; }
   .trend-col span { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {

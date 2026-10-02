@@ -70,6 +70,19 @@ export function chartSeries(rows, metric, kind = 'category') {
 
 `Revenue by day` passes `kind: "time"` and renders vertical columns. `Visitors by channel` stays horizontal because channels are categories. Cohort rows use `cohortComparisonRows()` for right-aligned values, retained-rate bars, and a top-revenue marker. That gives future agents a small pattern for choosing chart form from data meaning rather than applying one chart everywhere.
 
+## Iteration note: chart baselines and range width
+
+A follow-up visual audit caught a subtler chart issue: the revenue columns had different baselines because each column's label could take a different amount of vertical space, and a 30-day range could over-allocate width with `minmax(22px, 1fr)` plus large gaps. The far-right bar then risked clipping at narrow card widths.
+
+Lens now gives the time-series chart a stable plot/axis split:
+
+```css
+.trend { grid-template-columns: repeat(var(--count), minmax(0, 1fr)); }
+.trend-col { grid-template-rows: minmax(0, 1fr) 3.4em; }
+```
+
+The fixed axis row means every bar bottom lands on the same baseline, `minmax(0, 1fr)` keeps all active-range columns inside the card, and visual tick labels are thinned for dense ranges while each column keeps a full accessible `YYYY-MM-DD: $amount` label. The smoke test asserts that all bar bottoms are within 1px and that the last bar is inside the chart at both 1440px and true 390px for 7, 14 and 30 day ranges.
+
 ## Routing
 
 Lens uses a route signal for three screens:

@@ -83,5 +83,5 @@
 
 ## Visual QA audit
 - External reference: none supplied; design was evaluated against this document rather than a pixel target.
-- Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is dashboard-first with controls, metrics and chart panels above the fold; day revenue reads as a vertical time-series while channel visitors remain categorical horizontal bars; cohort values are right-aligned with comparison marks; mobile compacts the rail/cards and fixture seed metadata; reduced-motion is respected.
+- Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is dashboard-first with controls, metrics and chart panels above the fold; day revenue reads as a vertical time-series with fixed plot/axis rows, aligned baselines and unclipped 7/14/30-day ranges; channel visitors remain categorical horizontal bars; cohort values are right-aligned with comparison marks; mobile compacts the rail/cards and fixture seed metadata; reduced-motion is respected.
 - Follow-up after deployment: capture desktop/mobile screenshots from the live Vura URL and compare against the product goals above before linking from the marketing gallery.

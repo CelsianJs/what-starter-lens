@@ -64,7 +64,7 @@ function OverviewPage() {
       <Filters />
       <section class="dashboard-board">
         <StatCards />
-        <ChartCard title="Revenue by day" rows={() => analytics().byDay.slice(-14)} metric="revenue" />
+        <ChartCard title="Revenue by day" rows={() => analytics().byDay.slice(-rangeDayCount(range()))} metric="revenue" />
         <ChartCard title="Visitors by channel" rows={() => analytics().byChannel} metric="visitors" />
       </section>
     </Shell>
@@ -98,13 +98,14 @@ function HorizontalSeries({ series, metric }) {
 }
 
 function VerticalSeries({ series, metric }) {
+  const tickEvery = visualTickEvery(series.rows.length);
   return (
     <div class="trend" style={`--count:${series.rows.length}`}>
-      {series.rows.map((row) => (
-        <div class="trend-col">
+      {series.rows.map((row, index) => (
+        <div class="trend-col" tabindex="0" aria-label={`${row.label}: ${metric === 'revenue' ? money(row.value) : row.value.toLocaleString()}`}>
           <div class="trend-value">{metric === 'revenue' ? money(row.value) : row.value.toLocaleString()}</div>
           <i style={`--share:${row.share}`}></i>
-          <span>{shortLabel(row.label)}</span>
+          <span aria-hidden="true" data-visible={isVisualTick(index, series.rows.length, tickEvery) ? 'true' : 'false'}>{shortLabel(row.label)}</span>
         </div>
       ))}
     </div>
@@ -188,5 +189,12 @@ function App() {
 function pct(value) { return `${Math.round(value * 1000) / 10}%`; }
 function money(value) { return `$${Math.round(value).toLocaleString()}`; }
 function shortLabel(label) { return label.includes('-') ? label.slice(5) : label; }
+function rangeDayCount(value) { return value === '7d' ? 7 : value === '14d' ? 14 : 30; }
+function visualTickEvery(count) { return count > 14 ? 5 : count > 7 ? 2 : 1; }
+function isVisualTick(index, count, every) {
+  if (count > 14) return index > 0 && index < count - 1 && (index + 1) % every === 0;
+  if (count > 7) return index > 0 && index < count - 1 && index % every === 1;
+  return true;
+}
 
 mount(<App />, '#app');
