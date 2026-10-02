@@ -23,7 +23,20 @@ button, select { font: inherit; }
 button { cursor: pointer; }
 .shell { width: min(1240px, calc(100% - 28px)); margin: 0 auto; display: grid; grid-template-columns: 204px 1fr; gap: 18px; padding: 18px 0 48px; }
 .rail { position: sticky; top: 18px; height: calc(100vh - 36px); border: 1px solid var(--line); border-radius: 26px; background: rgba(16,32,47,.78); backdrop-filter: blur(16px); padding: 16px; display: flex; flex-direction: column; gap: 18px; }
-.logo { border: 0; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #06111b; border-radius: 19px; padding: 15px; font-size: 28px; font-weight: 900; letter-spacing: -.08em; }
+.logo {
+  border: 1px solid var(--line);
+  background: rgba(8,16,24,.48);
+  color: var(--ink);
+  border-radius: 19px;
+  padding: 13px 14px;
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -.07em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo span { width: 14px; height: 14px; border-radius: 4px; background: linear-gradient(135deg, var(--cyan), var(--lime)); box-shadow: 0 0 18px rgba(101,211,255,.45); }
 nav { display: grid; gap: 8px; }
 .nav-link { color: var(--muted); text-align: left; text-decoration: none; border: 1px solid transparent; background: transparent; border-radius: 16px; padding: 12px 13px; }
 .nav-link:hover, .nav-link:focus-visible, .nav-link.active { color: var(--ink); border-color: var(--line); background: rgba(255,255,255,.06); outline: none; }
@@ -45,11 +58,11 @@ main { min-width: 0; }
   box-shadow: 0 24px 80px rgba(0,0,0,.2);
 }
 .product-header > div { padding: 22px; }
-.product-header aside { padding: 18px; display: grid; align-content: center; gap: 8px; }
+.product-header aside { padding: 16px; display: grid; align-content: center; gap: 7px; }
 .product-header p:not(.eyebrow) { margin: 12px 0 0; max-width: 760px; color: var(--muted); line-height: 1.55; }
 .product-header aside span,
 .product-header aside small { color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; font-weight: 900; }
-.product-header aside strong { font-size: 34px; line-height: 1; color: var(--lime); letter-spacing: -.05em; }
+.product-header aside strong { font-size: 34px; line-height: 1; color: var(--cyan); letter-spacing: -.05em; }
 .eyebrow { margin: 0 0 10px; color: var(--lime); text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 900; }
 h1 { margin: 0; font-size: clamp(34px, 4.8vw, 64px); line-height: .9; letter-spacing: -.07em; max-width: 900px; }
 h2 { margin: 0 0 18px; font-size: 22px; letter-spacing: -.03em; }
@@ -69,9 +82,80 @@ select:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(101,211,255
 .bar { height: 16px; background: rgba(255,255,255,.07); border-radius: 999px; overflow: hidden; }
 .bar i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cyan), var(--lime)); }
 .bar-row b { color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.trend {
+  display: grid;
+  grid-template-columns: repeat(var(--count), minmax(22px, 1fr));
+  gap: 8px;
+  height: 280px;
+  align-items: end;
+  padding-top: 26px;
+}
+.trend-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: stretch;
+  height: 100%;
+  min-width: 0;
+  position: relative;
+}
+.trend-col i {
+  display: block;
+  height: calc(var(--share) * 100%);
+  min-height: 10px;
+  border-radius: 999px 999px 6px 6px;
+  background: linear-gradient(180deg, var(--cyan), var(--lime));
+}
+.trend-col span {
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+  writing-mode: vertical-rl;
+  justify-self: center;
+}
+.trend-value {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+}
+.trend-col:hover .trend-value,
+.trend-col:focus-within .trend-value { opacity: 1; }
 table { width: 100%; min-width: 620px; border-collapse: collapse; overflow: hidden; }
 th, td { text-align: left; padding: 15px 10px; border-bottom: 1px solid var(--line); }
+td:not(:first-child), th:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
 th { color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+.compare-cell {
+  display: grid;
+  grid-template-columns: minmax(52px, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+.compare-cell i {
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(101,211,255,.25), var(--cyan));
+  justify-self: end;
+}
+.revenue-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.revenue-cell.top::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--lime);
+  box-shadow: 0 0 14px rgba(169,255,104,.5);
+}
 .export-card { display: grid; gap: 12px; }
 .button { border: 1px solid var(--line); border-radius: 999px; background: var(--panel-2); color: var(--ink); padding: 13px 18px; font-weight: 900; width: fit-content; }
 .button.primary { background: var(--cyan); border-color: var(--cyan); color: #06111b; }
@@ -87,16 +171,25 @@ pre { margin: 0; white-space: pre-wrap; overflow: auto; border-radius: 20px; bac
 @media (max-width: 900px) {
   .shell { display: block; }
   .rail { position: relative; top: auto; height: auto; margin-bottom: 18px; }
-  .product-header, .filters, .stats, .dashboard-board, .server-summary { grid-template-columns: 1fr; }
+  .product-header, .filters, .dashboard-board, .server-summary { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .dashboard-board .card:first-of-type { grid-row: auto; }
   nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .nav-link { text-align: center; }
   .product-header > div { padding: 18px; }
+  .rail-note { margin-top: 0; }
 }
 @media (max-width: 430px) {
   .shell { width: min(100% - 20px, 1240px); padding-top: 10px; }
   .rail, .product-header > div, .product-header aside, .stats div, .card { border-radius: 22px; }
   .bar-row { grid-template-columns: 58px 1fr 72px; gap: 8px; }
+  .product-header aside {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .product-header aside small { grid-column: 1 / -1; }
+  .trend { gap: 5px; height: 240px; }
+  .trend-col span { font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }

@@ -50,6 +50,26 @@ export const analytics = computed(() => aggregateEvents(filteredEvents()));
 
 `src/data.js` owns deterministic event generation, filter normalization, aggregation and CSV serialization. Both the client and serverless endpoint use the same source of truth.
 
+## Iteration note: chart semantics
+
+The first dashboard drew revenue-by-day as horizontal bars, which made a time series read like a category ranking. Lens now prepares chart metadata in `src/data.js`:
+
+```js
+export function chartSeries(rows, metric, kind = 'category') {
+  return {
+    kind,
+    orientation: kind === 'time' ? 'vertical' : 'horizontal',
+    rows: ordered.map((row) => ({
+      ...row,
+      value: Number(row[metric]) || 0,
+      share: Math.max(0.04, (Number(row[metric]) || 0) / max)
+    }))
+  };
+}
+```
+
+`Revenue by day` passes `kind: "time"` and renders vertical columns. `Visitors by channel` stays horizontal because channels are categories. Cohort rows use `cohortComparisonRows()` for right-aligned values, retained-rate bars, and a top-revenue marker. That gives future agents a small pattern for choosing chart form from data meaning rather than applying one chart everywhere.
+
 ## Routing
 
 Lens uses a route signal for three screens:
@@ -101,7 +121,7 @@ Regression tests cover multibyte emoji byte caps, streamed oversized bodies that
 
 ## UI learning points
 
-The overview is dashboard-first rather than landing-page-first: filters, metrics and chart panels appear immediately above the fold. The generated `/build` page mirrors these notes so agents can learn from the live demo without private project context.
+The overview is dashboard-first rather than landing-page-first: filters, metrics and chart panels appear immediately above the fold. The brand mark stays quiet, while the cyan/lime gradient is reserved for data. The generated `/build` page mirrors these notes so agents can learn from the live demo without private project context.
 
 ## Vura packaging
 

@@ -1,6 +1,6 @@
 import { mount } from 'what-framework';
 import './styles.css';
-import { channels, cohorts } from './data.js';
+import { channels, chartSeries, cohortComparisonRows, cohorts } from './data.js';
 import { analytics, channel, cohort, downloadCsv, fetchServerReport, navigate, range, report, routePath } from './state.js';
 
 function NavLink({ href, children }) {
@@ -11,7 +11,7 @@ function Shell({ children }) {
   return (
     <div class="shell">
       <aside class="rail">
-        <button class="logo" onClick={() => navigate('/')}>Lens</button>
+        <button class="logo" onClick={() => navigate('/')}><span></span>Lens</button>
         <nav aria-label="Primary">
           <NavLink href="/">Overview</NavLink>
           <NavLink href="/cohorts">Cohorts</NavLink>
@@ -56,9 +56,9 @@ function OverviewPage() {
           <p>Filter deterministic demo events, inspect live chart panels, then compare the client aggregate with the serverless report.</p>
         </div>
         <aside aria-label="Dataset status">
-          <span>Fixture seed</span>
-          <strong>20261001</strong>
-          <small>{() => `${analytics().totals.visitors.toLocaleString()} filtered visitors`}</small>
+          <span>Fixture seed 20261001</span>
+          <strong>{() => analytics().totals.visitors.toLocaleString()}</strong>
+          <small>filtered visitors · no tracking script</small>
         </aside>
       </header>
       <Filters />
@@ -73,22 +73,41 @@ function OverviewPage() {
 
 function ChartCard({ title, rows, metric }) {
   return (
-    <article class="card">
+    <article class={() => chartSeries(rows(), metric, title.includes('day') ? 'time' : 'category').orientation === 'vertical' ? 'card trend-card' : 'card'}>
       <h2>{title}</h2>
-      <div class="bars">
-        {() => {
-          const data = rows();
-          const max = Math.max(...data.map((row) => row[metric]), 1);
-          return data.map((row) => (
-            <div class="bar-row">
-              <span>{shortLabel(row.label)}</span>
-              <div class="bar"><i style={`width:${Math.max(4, (row[metric] / max) * 100)}%`}></i></div>
-              <b>{metric === 'revenue' ? money(row[metric]) : row[metric].toLocaleString()}</b>
-            </div>
-          ));
-        }}
-      </div>
+      {() => {
+        const series = chartSeries(rows(), metric, title.includes('day') ? 'time' : 'category');
+        return series.orientation === 'vertical' ? <VerticalSeries series={series} metric={metric} /> : <HorizontalSeries series={series} metric={metric} />;
+      }}
     </article>
+  );
+}
+
+function HorizontalSeries({ series, metric }) {
+  return (
+    <div class="bars">
+      {series.rows.map((row) => (
+        <div class="bar-row">
+          <span>{shortLabel(row.label)}</span>
+          <div class="bar"><i style={`width:${row.share * 100}%`}></i></div>
+          <b>{metric === 'revenue' ? money(row.value) : row.value.toLocaleString()}</b>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function VerticalSeries({ series, metric }) {
+  return (
+    <div class="trend" style={`--count:${series.rows.length}`}>
+      {series.rows.map((row) => (
+        <div class="trend-col">
+          <div class="trend-value">{metric === 'revenue' ? money(row.value) : row.value.toLocaleString()}</div>
+          <i style={`--share:${row.share}`}></i>
+          <span>{shortLabel(row.label)}</span>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -100,7 +119,17 @@ function CohortsPage() {
       <section class="card">
         <table>
           <thead><tr><th>Cohort</th><th>Visitors</th><th>Activated</th><th>Retained</th><th>Revenue</th></tr></thead>
-          <tbody>{() => analytics().byCohort.map((row) => <tr><td>{row.label}</td><td>{row.visitors.toLocaleString()}</td><td>{pct(row.activationRate)}</td><td>{pct(row.retentionRate)}</td><td>{money(row.revenue)}</td></tr>)}</tbody>
+          <tbody>
+            {() => cohortComparisonRows(analytics().byCohort).map((row) => (
+              <tr>
+                <td>{row.label}</td>
+                <td>{row.visitors.toLocaleString()}</td>
+                <td>{pct(row.activationRate)}</td>
+                <td><span class="compare-cell"><i style={`width:${row.retentionShare * 100}%`}></i>{pct(row.retentionRate)}</span></td>
+                <td><span class={row.isTopRevenue ? 'revenue-cell top' : 'revenue-cell'}>{money(row.revenue)}</span></td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </section>
     </Shell>

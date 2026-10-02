@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-01
+- Last refreshed: 2026-10-02
 - Primary product surfaces: compact analytics overview with chart panels above the fold, cohort table, export/server report view, static `/build` explainer.
 - Evidence reviewed: What Framework dashboard conventions, Vura build-output shape, and the public starter requirements.
 
@@ -42,7 +42,7 @@
 
 ## Components
 - Existing components to reuse: none; standalone public starter.
-- New/changed components: rail nav, compact product header, filters, stat cards, bar charts, cohort table, export panel.
+- New/changed components: rail nav, compact product header, filters, stat cards, vertical time-series chart, horizontal category bars, cohort comparison table, export panel.
 - Variants and states: report idle/loading/ready/error; filtered empty endpoint state.
 - Token/component ownership: CSS variables in `src/styles.css`.
 
@@ -83,5 +83,5 @@
 
 ## Visual QA audit
 - External reference: none supplied; design was evaluated against this document rather than a pixel target.
-- Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is now dashboard-first with controls, metrics and chart panels above the fold; dense tables remain readable inside scrolling cards; mobile collapses the rail/cards cleanly; reduced-motion is respected.
+- Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is dashboard-first with controls, metrics and chart panels above the fold; day revenue reads as a vertical time-series while channel visitors remain categorical horizontal bars; cohort values are right-aligned with comparison marks; mobile compacts the rail/cards and fixture seed metadata; reduced-motion is respected.
 - Follow-up after deployment: capture desktop/mobile screenshots from the live Vura URL and compare against the product goals above before linking from the marketing gallery.

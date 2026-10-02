@@ -80,6 +80,34 @@ export function aggregateEvents(events) {
   return { totals, byChannel, byCohort, byDay };
 }
 
+export function chartSeries(rows, metric, kind = 'category') {
+  const ordered = kind === 'time'
+    ? [...rows].sort((a, b) => String(a.label).localeCompare(String(b.label)))
+    : [...rows];
+  const max = Math.max(...ordered.map((row) => Number(row[metric]) || 0), 1);
+  return {
+    kind,
+    metric,
+    orientation: kind === 'time' ? 'vertical' : 'horizontal',
+    rows: ordered.map((row) => ({
+      ...row,
+      value: Number(row[metric]) || 0,
+      share: Math.max(0.04, (Number(row[metric]) || 0) / max)
+    }))
+  };
+}
+
+export function cohortComparisonRows(rows) {
+  const revenueMax = Math.max(...rows.map((row) => row.revenue), 1);
+  const retentionMax = Math.max(...rows.map((row) => row.retentionRate), 1);
+  return rows.map((row) => ({
+    ...row,
+    revenueShare: row.revenue / revenueMax,
+    retentionShare: row.retentionRate / retentionMax,
+    isTopRevenue: row.revenue === revenueMax
+  }));
+}
+
 function aggregateGroup(rows, label) {
   const totals = aggregateEventsFlat(rows);
   return { label, ...totals };

@@ -28,6 +28,11 @@ export function BuildPage() {
       h('p', null, 'The overview intentionally starts with product controls, metrics and chart panels instead of a marketing hero. Agents can copy this pattern for tools where users need operational signal above the fold.')
     ),
     h('section', null,
+      h('h2', null, 'Design iteration: chart meaning'),
+      h('p', null, 'A review caught that day-by-day revenue was drawn as ranking bars. Lens now uses vertical columns for time-series data, keeps horizontal bars for channels, and aligns cohort table numbers with retained-rate comparison marks.'),
+      h('p', null, 'The helper functions in src/data.js return chart orientation and comparison metadata, so future agents can test the data contract before changing the visual layer.')
+    ),
+    h('section', null,
       h('h2', null, 'Boundaries'),
       h('p', null, 'Lens never tracks the visitor. All analytics rows are generated fixtures and the serverless report reads only that fixture set.'),
       h('p', null, 'Planned public source: https://github.com/CelsianJs/what-starter-lens')
