@@ -24,6 +24,8 @@ try {
   const mobilePage = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
   mobilePage.on('console', (msg) => { if (['error', 'warning'].includes(msg.type())) errors.push(msg.text()); });
   await mobilePage.goto(`http://127.0.0.1:${port}/`);
+  const mobileHierarchy = await mobilePage.evaluate(() => ({ stats: document.querySelector('.stats').getBoundingClientRect().top, chart: document.querySelector('.trend-card').getBoundingClientRect().top, overflow: document.documentElement.scrollWidth > innerWidth }));
+  if (mobileHierarchy.stats >= 650 || mobileHierarchy.chart >= 844 || mobileHierarchy.overflow) throw new Error(`Mobile dashboard hierarchy regressed: ${JSON.stringify(mobileHierarchy)}`);
   await assertTrendGeometry(mobilePage, { range: '7d', expectedColumns: 7, viewport: '390' });
   await assertTrendGeometry(mobilePage, { range: '14d', expectedColumns: 14, viewport: '390' });
   await assertTrendGeometry(mobilePage, { range: '30d', expectedColumns: 30, viewport: '390' });
@@ -31,7 +33,10 @@ try {
   await page.getByLabel('Channel').selectOption('Partner');
   await page.getByRole('button', { name: 'Exports' }).click();
   await page.getByRole('button', { name: 'Refresh summary' }).click();
-  await page.getByText('Rows').waitFor();
+  await page.getByText('Rows', { exact: true }).waitFor();
+  await page.getByText('Matches current filters.', { exact: false }).waitFor();
+  await page.getByLabel('Channel').selectOption('Organic');
+  await page.getByText('Filters changed — refresh to update this summary.', { exact: false }).waitFor();
   await page.goto(`http://127.0.0.1:${port}/build`);
   await page.getByRole('heading', { name: 'How Lens is built' }).waitFor();
   if (errors.length) throw new Error(`Console problems:\n${errors.join('\n')}`);

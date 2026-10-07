@@ -174,6 +174,9 @@ pre { margin: 0; white-space: pre-wrap; overflow: auto; border-radius: 20px; bac
 .server-summary small { color: var(--muted); text-transform: uppercase; letter-spacing: .1em; font-size: 11px; font-weight: 900; }
 .server-summary strong { display: block; margin-top: 8px; font-size: 28px; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
 .server-summary details { grid-column: 1 / -1; }
+.report-snapshot { grid-column: 1 / -1; color: var(--muted); margin: 0; line-height: 1.5; }
+.table-hint { display: none; }
+button:disabled { cursor: wait; opacity: .6; }
 .server-summary summary { color: var(--muted); font-weight: 900; }
 @media (max-width: 900px) {
   .shell { display: block; }
@@ -197,6 +200,25 @@ pre { margin: 0; white-space: pre-wrap; overflow: auto; border-radius: 20px; bac
   .product-header aside small { grid-column: 1 / -1; }
   .trend { gap: 3px; height: 240px; }
   .trend-col span { font-size: 10px; }
+  .rail { padding: 10px; gap: 8px; margin-bottom: 8px; }
+  .logo { border: 0; padding: 2px 5px; font-size: 23px; }
+  nav { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+  .nav-link { padding: 9px 3px; font-size: 13px; }
+  .rail-note { margin: 0; font-size: 11px; }
+  .product-header { gap: 8px; padding-top: 4px; }
+  .product-header h1 { font-size: 28px; line-height: 1; }
+  .product-header > div { padding: 14px; }
+  .product-header p:not(.eyebrow) { font-size: 13px; line-height: 1.4; margin-top: 8px; }
+  .product-header aside { padding: 10px 14px; }
+  .product-header aside strong { font-size: 26px; }
+  .product-header aside span, .product-header aside small { font-size: 9px; }
+  .filters { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .filters label:first-child { grid-column: 1 / -1; }
+  select { min-height: 42px; margin-top: 5px; border-radius: 12px; padding-inline: 10px; }
+  .stats div { padding: 14px; }
+  .stats strong { font-size: 27px; margin-top: 6px; }
+  .stats small { font-size: 11px; }
+  .table-hint { display: block; color: var(--muted); font-size: 12px; margin: 0 0 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }

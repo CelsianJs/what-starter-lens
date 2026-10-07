@@ -39,6 +39,7 @@ export function downloadCsv() {
 }
 
 export async function fetchServerReport() {
+  if (report().status === 'loading') return;
   report({ status: 'loading', data: null, error: null });
   try {
     const response = await fetch('/api/report', {

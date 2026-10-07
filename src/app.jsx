@@ -118,6 +118,7 @@ function CohortsPage() {
       <div class="section-heading"><p class="eyebrow">Cohort detail</p><h1>Segment health updates as filters change.</h1></div>
       <Filters />
       <section class="card">
+        <p class="table-hint">Scroll the comparison to see every metric →</p>
         <table>
           <thead><tr><th>Cohort</th><th>Visitors</th><th>Activated</th><th>Retained</th><th>Revenue</th></tr></thead>
           <tbody>
@@ -144,7 +145,7 @@ function ExportsPage() {
       <Filters />
       <section class="card export-card">
         <button class="button primary" onClick={downloadCsv}>Download CSV</button>
-        <button class="button" onClick={fetchServerReport}>Refresh summary</button>
+        <button class="button" disabled={() => report().status === 'loading'} onClick={fetchServerReport}>{() => report().status === 'loading' ? 'Refreshing…' : 'Refresh summary'}</button>
         <ReportResult />
       </section>
     </Shell>
@@ -155,10 +156,11 @@ function ReportResult() {
   return () => {
     const state = report();
     if (state.status === 'idle') return <p class="report-note">No server summary yet. Refresh when you want a checked read on the current filters.</p>;
-    if (state.status === 'loading') return <p class="report-note">Refreshing summary…</p>;
+    if (state.status === 'loading') return <p class="report-note" role="status">Refreshing summary…</p>;
     if (state.status === 'error') return <p class="report-note error">Summary error: {state.error}</p>;
     return (
       <div class="server-summary">
+        <p class="report-snapshot" role="status">{state.data.filters.range} · {state.data.filters.channel} · {state.data.filters.cohort} snapshot. {() => JSON.stringify(state.data.filters) === JSON.stringify({ range: range(), channel: channel(), cohort: cohort() }) ? 'Matches current filters.' : 'Filters changed — refresh to update this summary.'}</p>
         <div><small>Rows</small><strong>{state.data.rowCount.toLocaleString()}</strong></div>
         <div><small>Visitors</small><strong>{state.data.totals.visitors.toLocaleString()}</strong></div>
         <div><small>Activation</small><strong>{pct(state.data.totals.activationRate)}</strong></div>
