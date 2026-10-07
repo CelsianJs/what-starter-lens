@@ -1,5 +1,20 @@
 # Build notes for agents
 
+## Mobile hierarchy and report snapshots
+
+At narrow widths the rail, fixture metadata, filters, and metric cards use compact spacing while preserving native labeled controls. Cohorts keep their semantic scrolling table and a visible horizontal-scroll hint. A report shows the filters represented by its server response and warns when controls no longer match that snapshot; refreshing is disabled while a request is pending.
+
+The relevant source pattern is:
+
+```js
+if (report().status === 'loading') return;
+```
+
+The smoke test requires metrics before650px and the chart card before844px at390px, checks7/14/30-day bar geometry, then confirms report freshness changes when filters change.
+
+Keep the product anonymous and local/synthetic. These workflow improvements do not add authentication, collaboration, payments, ingestion, or durable server storage.
+
+
 Lens is a product analytics dashboard starter. It uses deterministic synthetic events, reactive client filters, CSV export and a bounded serverless report endpoint. It never tracks visitors and does not claim a real ingestion pipeline.
 
 ## Smooth path

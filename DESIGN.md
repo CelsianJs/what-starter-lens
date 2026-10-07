@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-02
+- Last refreshed: 2026-10-07
 - Primary product surfaces: compact analytics overview with chart panels above the fold, cohort table, export/server report view, static `/build` explainer.
 - Evidence reviewed: What Framework dashboard conventions, Vura build-output shape, and the public starter requirements.
 
@@ -63,7 +63,7 @@
 - Empty: server endpoint has explicit no-match error, though valid UI filters always have data.
 - Error: report panel prints typed error JSON.
 - Success: report JSON includes filters, rowCount, totals, byChannel, byCohort and byDay.
-- Disabled: not needed.
+- Disabled: server summary refresh is disabled while its request is pending; CSV export remains local and available.
 - Offline/slow network: client analytics keep working; server report shows fetch error.
 
 ## Content voice
@@ -78,7 +78,14 @@
 - Compatibility constraints: Vura Function-compatible endpoint, browser Blob CSV export.
 - Test/screenshot expectations: unit tests, API tests, build, Playwright smoke where browser is available.
 
+## Operational refinement
+
+At narrow widths the rail, fixture metadata, filters, and metric cards use compact spacing while preserving native labeled controls. Cohorts keep their semantic scrolling table and a visible horizontal-scroll hint. A report shows the filters represented by its server response and warns when controls no longer match that snapshot; refreshing is disabled while a request is pending.
+
+Validation contract: The smoke test requires metrics before650px and the chart card before844px at390px, checks7/14/30-day bar geometry, then confirms report freshness changes when filters change.
+
 ## Open questions
+
 - [ ] Root confirms final live Vura URL after deployment.
 
 ## Visual QA audit

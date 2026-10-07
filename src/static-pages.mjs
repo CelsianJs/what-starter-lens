@@ -4,6 +4,11 @@ export function BuildPage() {
   return h('main', { class: 'build' },
     h('p', { class: 'eyebrow' }, 'Agent reference'),
     h('h1', null, 'How Lens is built'),
+    h('section', null,
+      h('h2', null, 'Mobile hierarchy and report freshness'),
+      h('p', null, 'The narrow rail and filter layout are compact so metrics precede long scrolling. The cohort table keeps semantic columns and adds a scroll hint. Server summaries display their response filters and warn when current controls differ; a pending request disables refresh. The smoke test pins mobile hierarchy, chart geometry and snapshot freshness.'),
+      h('pre', null, "if (report().status === 'loading') return;")
+    ),
     h('p', null, 'Lens is a public What Framework starter for analytics dashboards. The app uses a deterministic synthetic event seed, client-side reactive filtering, CSV export, generated static build notes and a serverless report endpoint.'),
     h('section', null,
       h('h2', null, 'State and computed analytics'),
