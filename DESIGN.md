@@ -2,7 +2,7 @@
 
 ## Source of truth
 - Status: Active
-- Last refreshed: 2026-10-07
+- Last refreshed: 2026-10-08
 - Primary product surfaces: compact analytics overview with chart panels above the fold, cohort table, export/server report view, static `/build` explainer.
 - Evidence reviewed: What Framework dashboard conventions, Vura build-output shape, and the public starter requirements.
 
@@ -36,7 +36,7 @@
 - Color: dark blue-grey, cyan/lime signal accents.
 - Typography: Avenir Next/system sans for a clean analytical feel.
 - Spacing/layout rhythm: compact left rail plus dashboard board on desktop; stacked mobile.
-- Shape/radius/elevation: rounded glassy panels with subtle borders.
+- Shape/radius/elevation: flat navy surfaces, 8–12px radii and subtle borders.
 - Motion: none required for meaning; reduced-motion guard present.
 - Imagery/iconography: no external imagery.
 
@@ -92,3 +92,8 @@ Validation contract: The smoke test requires metrics before650px and the chart c
 - External reference: none supplied; design was evaluated against this document rather than a pixel target.
 - Current judgment: blue-grey analytics-console direction is distinct from Tempo; the overview is dashboard-first with controls, metrics and chart panels above the fold; day revenue reads as a vertical time-series with fixed plot/axis rows, aligned baselines and unclipped 7/14/30-day ranges; channel visitors remain categorical horizontal bars; cohort values are right-aligned with comparison marks; mobile compacts the rail/cards and fixture seed metadata; reduced-motion is respected.
 - Follow-up after deployment: capture desktop/mobile screenshots from the live Vura URL and compare against the product goals above before linking from the marketing gallery.
+
+
+## Modern interface consistency
+
+The primary workspace, detail views and build guide share a bounded sans-serif hierarchy, natural-case 14px chrome, 44px targets and quiet surfaces. Do not reintroduce poster headings, decorative background grids, heavy shadows or pill-shaped navigation. Brand accents and functional visualizations remain distinct; operational information takes precedence over decoration.
