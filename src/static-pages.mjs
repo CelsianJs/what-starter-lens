@@ -2,6 +2,7 @@ import { h } from 'what-framework';
 
 export function BuildPage() {
   return h('main', { class: 'build' },
+    h('nav', { 'aria-label': 'Starter navigation' }, h('a', { href: '/' }, 'Lens'), h('a', { href: '/cohorts' }, 'Cohorts'), h('a', { href: '/exports' }, 'Exports')),
     h('p', { class: 'eyebrow' }, 'Agent reference'),
     h('h1', null, 'How Lens is built'),
     h('section', null,
@@ -60,11 +61,15 @@ export function NotFoundPage() {
 }
 
 export const staticCss = `
-  body{margin:0;background:#0d1720;color:#eef7ff;font-family:'Avenir Next',ui-sans-serif,system-ui,sans-serif}
-  .build{width:min(840px,calc(100% - 32px));margin:0 auto;padding:72px 0;line-height:1.65}
-  .eyebrow{color:#a9ff68;text-transform:uppercase;letter-spacing:.16em;font:900 12px ui-sans-serif,system-ui}
-  h1{font-size:clamp(42px,8vw,88px);line-height:.9;letter-spacing:-.075em;margin:0 0 18px}
-  h2{font-size:26px;margin-top:36px}
-  pre{white-space:pre-wrap;background:#081018;color:#d9f2ff;border-radius:18px;padding:16px;overflow:auto}
-  a{color:#65d3ff} li{margin:10px 0}
+  *{box-sizing:border-box}
+  body{margin:0;background:#0d1720;color:#eef7ff;font:16px/1.6 'Avenir Next','Segoe UI Variable','Segoe UI',sans-serif}
+  .build{width:min(840px,calc(100% - 32px));margin:0 auto;padding:32px 0}
+  nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+  nav a{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border:1px solid #334757;border-radius:8px;background:#142433;font-size:14px;text-decoration:none}
+  .eyebrow{color:#a9ff68;font-size:14px;font-weight:600}
+  h1{font-size:32px;line-height:1.2;letter-spacing:-.02em;margin:0 0 16px;font-weight:600}
+  h2{font-size:24px;line-height:1.3;margin-top:32px;font-weight:600}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#081018;color:#d9f2ff;border-radius:8px;padding:16px;overflow:auto;font-size:14px;line-height:1.6}
+  a{color:#65d3ff} a:focus-visible{outline:2px solid #65d3ff;outline-offset:3px} li{margin:8px 0}
+  @media(max-width:600px){h1{font-size:28px}.build{padding:24px 0}}
 `;
